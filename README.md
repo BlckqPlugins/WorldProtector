@@ -2,7 +2,7 @@
 WorldProtector for PocketMine
 
 # Commands
-- /wp <add|remove|list> (worldName)
+- /wp <add|remove|list> [worldName]
 
 # Permissions
 - wp.bypass: Bypass worldprotection
