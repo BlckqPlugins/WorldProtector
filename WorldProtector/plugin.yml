@@ -1,0 +1,17 @@
+name: WorldProtector
+version: 1.0
+author: BlckqPlugins
+api: ["4.0.0", "5.0.0"]
+main: blckqplugins\Main
+commands:
+  wp:
+    aliases: ["worldprotect"]
+    description: "Default WorldProtect command"
+    permission: wp.command
+permissions:
+  wp.bypass:
+    description: "permission to bypass world protections"
+    default: op
+  wp.command:
+    description: "Allows to use worldprotection command"
+    default: op
