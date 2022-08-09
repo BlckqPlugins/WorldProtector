@@ -3,6 +3,7 @@
 namespace blckqplugins;
 
 use pocketmine\event\block\BlockPlaceEvent;
+use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\plugin\PluginBase;
 use pocketmine\player\Player;
 use pocketmine\command\Command;
@@ -18,6 +19,11 @@ class Main extends PluginBase implements Listener{
     public function onEnable(): void{
 
         $this->saveResource("config.yml", false);
+
+        $config = $this->getConfig();
+        if (!is_array($this->getConfig()->get("protected-worlds"))) $config->set("protected-worlds", []);
+        if (!$config->exists("damage-enabled")) $config->set("damage-enabled", false);
+        $config->save();
 
         $message = "\n";
         foreach ((array)$this->getConfig()->get("protected-worlds") as $worlds){
@@ -135,6 +141,18 @@ class Main extends PluginBase implements Listener{
             if (in_array($player->getWorld()->getfolderName(), $this->getConfig()->get("protected-worlds"))) {
                 $event->cancel();
                 $player->sendMessage(self::PREFIX . "§cYou cannot place blocks in this world");
+            }
+        }
+    }
+
+    public function onDamage(EntityDamageEvent $event){
+        $entity = $event->getEntity();
+        if ($entity instanceof Player){
+            if (!$entity->hasPermission("wp.bypass")) {
+                if (in_array($entity->getWorld()->getfolderName(), $this->getConfig()->get("protected-worlds"))) {
+                    $event->cancel();
+                    $entity->sendMessage(self::PREFIX . "§cDamage is disabled in this world.");
+                }
             }
         }
     }

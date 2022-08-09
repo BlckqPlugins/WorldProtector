@@ -1,1 +1,5 @@
+# Protected worlds
 protected-worlds: []
+
+# Disable/Enable damage/pvp in disabled worlds
+damage-enabled: false
