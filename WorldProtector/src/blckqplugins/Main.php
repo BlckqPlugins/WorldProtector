@@ -149,6 +149,9 @@ class Main extends PluginBase implements Listener{
         $entity = $event->getEntity();
         if ($entity instanceof Player){
             if (!$entity->hasPermission("wp.bypass")) {
+                if ((bool)$this->getConfig()->get("damage-enabled")){
+                    return;
+                }
                 if (in_array($entity->getWorld()->getfolderName(), $this->getConfig()->get("protected-worlds"))) {
                     $event->cancel();
                     $entity->sendMessage(self::PREFIX . "§cDamage is disabled in this world.");
