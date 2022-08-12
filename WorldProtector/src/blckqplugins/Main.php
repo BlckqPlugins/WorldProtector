@@ -4,6 +4,7 @@ namespace blckqplugins;
 
 use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\event\entity\EntityDamageEvent;
+use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\plugin\PluginBase;
 use pocketmine\player\Player;
 use pocketmine\command\Command;
@@ -23,6 +24,7 @@ class Main extends PluginBase implements Listener{
         $config = $this->getConfig();
         if (!is_array($this->getConfig()->get("protected-worlds"))) $config->set("protected-worlds", []);
         if (!$config->exists("damage-enabled")) $config->set("damage-enabled", false);
+        if (!$config->exists("interact-enabled")) $config->set("interact-enabled", false);
         $config->save();
 
         $message = "\n";
@@ -138,6 +140,19 @@ class Main extends PluginBase implements Listener{
     public function onPlace(BlockPlaceEvent $event){
         $player = $event->getPlayer();
         if (!$player->hasPermission("wp.bypass")) {
+            if (in_array($player->getWorld()->getfolderName(), $this->getConfig()->get("protected-worlds"))) {
+                $event->cancel();
+                $player->sendMessage(self::PREFIX . "§cYou cannot place blocks in this world");
+            }
+        }
+    }
+
+    public function onInteract(PlayerInteractEvent $event){
+        $player = $event->getPlayer();
+        if (!$player->hasPermission("wp.bypass")) {
+            if ((bool)$this->getConfig()->get("interact-enabled")){
+                return;
+            }
             if (in_array($player->getWorld()->getfolderName(), $this->getConfig()->get("protected-worlds"))) {
                 $event->cancel();
                 $player->sendMessage(self::PREFIX . "§cYou cannot place blocks in this world");

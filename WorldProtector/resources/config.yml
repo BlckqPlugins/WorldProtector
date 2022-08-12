@@ -3,3 +3,6 @@ protected-worlds: []
 
 # Disable/Enable damage/pvp in disabled worlds
 damage-enabled: false
+
+# Disable/Enable item interaction in disabled worlds
+interact-enabled: false
