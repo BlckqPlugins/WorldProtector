@@ -1,7 +1,7 @@
 name: WorldProtector
 version: 1.0
 author: BlckqPlugins
-api: ["4.0.0", "5.0.0"]
+api: ["5.0.0"]
 main: blckqplugins\Main
 commands:
   wp:

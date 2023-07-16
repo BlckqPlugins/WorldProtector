@@ -76,7 +76,7 @@ class Main extends PluginBase implements Listener{
         }
 
         if (!isset($args[0])) {
-            $sender->sendMessage(self::PREFIX . "§cUse: /wp <add|remove|list> <worldname>");
+            $sender->sendMessage(self::PREFIX . "§cUse: /wp <add|remove|list> [worldname]");
             return false;
         }
 
@@ -94,7 +94,7 @@ class Main extends PluginBase implements Listener{
                         $sender->sendMessage(self::PREFIX . "This world don't exists.");
                     }
                 } else {
-                    $sender->sendMessage(self::PREFIX . "§cUse: /wp <add|remove|list> <worldname>");
+                    $sender->sendMessage(self::PREFIX . "§cUse: /wp <add|remove|list> [worldname]");
                 }
                 return false;
             }
@@ -111,7 +111,7 @@ class Main extends PluginBase implements Listener{
                         $sender->sendMessage(self::PREFIX . "This world don't exists.");
                     }
                 } else {
-                    $sender->sendMessage(self::PREFIX . "§cUse: /wp <add|remove|list> <worldname>");
+                    $sender->sendMessage(self::PREFIX . "§cUse: /wp <add|remove|list> [worldname]");
                 }
                 return true;
             }
@@ -155,7 +155,7 @@ class Main extends PluginBase implements Listener{
             }
             if (in_array($player->getWorld()->getfolderName(), $this->getConfig()->get("protected-worlds"))) {
                 $event->cancel();
-                $player->sendMessage(self::PREFIX . "§cYou cannot place blocks in this world");
+                $player->sendMessage(self::PREFIX . "§cYou interact with blocks/items in this world");
             }
         }
     }
